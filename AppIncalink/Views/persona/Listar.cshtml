@@ -1,0 +1,61 @@
+﻿@model List<ListarPersonasNombresModel>
+
+@{
+    ViewData["Title"] = "Listar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1>Listar</h1>
+
+<a asp-action="Guardar" asp-controller="persona" class="btn btn-success">Crear Persona</a>
+
+</hr>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+
+                <th scope="col">Nombre Completo</th>
+                <th scope="col">Sexo</th>
+                <th scope="col">Documento ID</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Alergia Alimentación</th>
+                <th scope="col">Alergia Varias</th>
+                <th scope="col">Observaciones</th>
+                <th scope="col">Grupo</th>
+                <th scope="col">Habitación</th>
+                <th scope="col">Rol</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.nombreCompleto</td>
+                    <td>@item.nombreSexo</td>
+                    <td>@item.documentoId</td>
+                    <td>@item.correo</td>
+                    <td>@item.telefono</td>
+                    <td>@item.alergiaAlimentacion</td>
+                    <td>@item.alegiaVarias</td>
+                    <td>@item.observaciones</td>
+                    <td>@item.nombreGrupo</td>
+                    <td>@item.numeroHabitacion</td>
+                    <td>@item.nombreRol</td>
+                    <td>
+                        <a asp-action="Eliminar" asp-controller="persona" class="btn btn-danger btn-sm" asp-route-id="@item.id">Eliminar</a>
+                    </td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>
+
+

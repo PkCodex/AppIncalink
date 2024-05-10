@@ -1,0 +1,58 @@
+﻿@model List<grupoModel>
+@{
+    ViewData["Title"] = "Listar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Listar</h1>
+
+<a asp-action="Guardar" asp-controller="grupo" class="btn btn-success">Crear Grupo</a>
+
+</hr>
+
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+
+                <th scope="col">Nombre</th>
+                <th scope="col">Fecha de Llegada</th>
+                <th scope="col">Fecha de Salida</th>
+                <th scope="col">Informacion del Vuelo</th>
+                <th scope="col">Itinerario del Vuelo</th>
+                <th scope="col">Observaciones</th>
+                <th>Ver Detalles</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.nombre</td>
+                    <td>@item.fechaLlegada</td>
+                    <td>@item.fechaSalida</td>
+                    <td>@item.informacionVuelo</td>
+                    <td>@item.intinerarioVuelo</td>
+                    <td>@item.observaciones</td>
+                    <td>
+                        <a asp-action="ListarPersonas" asp-controller="grupo" asp-route-idGrupo="@item.id" asp-route-idPersona="@item.id">Ver Detalles</a>
+                    </td>
+                    <td>
+                        <a asp-action="Editar" asp-controller="grupo" class="btn btn-primary btn-sm" asp-route-id="@item.id">Editar</a>
+                    </td>
+                    <td>
+                        <a asp-action="Eliminar" asp-controller="grupo" class="btn btn-danger btn-sm" asp-route-id="@item.id">Eliminar</a>
+                    </td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>
+
+

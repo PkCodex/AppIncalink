@@ -1,0 +1,46 @@
+﻿@model grupoModel
+@{
+    ViewData["Title"] = "Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section>
+    <form asp-action="Editar" asp-controller="grupo">
+        <input asp-for="id" type="hidden" class="form-control">
+        <div class="form-group">
+            <label>Nombre del Grupo</label>
+            <input asp-for="nombre" type="text" class="form-control">
+            <span asp-validation-for="nombre" class="text-danger"></span>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>Fecha LLegada</label>
+                <input asp-for="fechaLlegada" type="date" class="form-control">
+                <span asp-validation-for="fechaLlegada" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label>Fecha Final</label>
+                <input asp-for="fechaSalida" type="date" class="form-control">
+                <span asp-validation-for="fechaLlegada" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Información del Vuelo</label>
+            <textarea asp-for="informacionVuelo" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="fechaLlegada" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Itinerario del Vuelo</label>
+            <textarea asp-for="intinerarioVuelo" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="fechaLlegada" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Observaciones del Grupo</label>
+            <textarea asp-for="observaciones" class="form-control"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Editar Grupo</button>
+        <a asp-action="Listar" asp-controller="grupo" class="btn btn-warning">Volver a la Lista</a>
+    </form>
+</section>
+

@@ -1,0 +1,82 @@
+﻿@model actividadesModel
+@{
+    ViewData["Title"] = "Guardar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h3>Guardar</h3>
+<form asp-action="Guardar" asp-controller="actividad">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Nombre de la Actividad</label>
+            <input asp-for="nombre" type="text" class="form-control">
+            <span asp-validation-for="nombre" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label>Grupo</label>
+            <select asp-for="idGrupo" class="form-control" asp-items="ViewBag.GrupoOptions">
+                <option value="@ViewBag.NombreGrupo">@ViewBag.NombreGrupo</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Fecha de Inicio</label>
+            <input asp-for="fechaInicio" type="datetime-local" class="form-control">
+            <span asp-validation-for="fechaInicio" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label>Fecha Final</label>
+            <input asp-for="fechaFin" type="datetime-local" class="form-control">
+            <span asp-validation-for="fechaFin" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Recursos</label>
+        <textarea asp-for="recursos" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="recursos" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Responsable</label>
+        <textarea asp-for="responsables" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="responsables" class="text-danger"></span>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Lugar Desde</label>
+            <textarea asp-for="lugarDesde" class="form-control"></textarea>
+        </div>
+        <div class="form-group col-md-6">
+            <label>Lugar Hacia</label>
+            <textarea asp-for="LugarHacia" class="form-control"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Observaciones</label>
+        <textarea asp-for="observaciones" class="form-control"></textarea>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Tipo de Actividad</label>
+            <select asp-for="idTipoActividad" class="form-control" onchange="mostrarOcultarCampos()" asp-items="ViewBag.tipoActividadOptions">
+                <option value="">Selecciona Tipoo de actividad</option>
+                <option value="@ViewBag.NombreTipoActividad">@ViewBag.NombreTipoActividad</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <select id="menuSelect" asp-for="idMenu" class="form-control" asp-items="ViewBag.MenuOptions">
+                <option value="">Selecciona Menú</option>
+                <option value="@ViewBag.NombreMenu">@ViewBag.NombreMenu</option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <select id="vehiculoSelect" asp-for="idVehiculo" class="form-control" asp-items="ViewBag.vehiculoOptions">
+                <option value="">Selecciona Vehiculo</option>
+                <option value="@ViewBag.NombreTransporte">@ViewBag.NombreTransporte</option>
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Agregar Actividad</button>
+    <a asp-action="Listar" asp-controller="actividad" class="btn btn-warning">Volver a la Lista</a>
+</form>
+

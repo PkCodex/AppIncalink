@@ -1,0 +1,80 @@
+﻿@model personaModel
+@{
+    ViewData["Title"] = "Guardar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Guardar</h1>
+
+<form asp-action="Guardar" asp-controller="persona">
+
+    <div class="form-group">
+        <label>Nombre Completo</label>
+        <input asp-for="nombreCompleto" type="text" class="form-control">
+        <span asp-validation-for="nombreCompleto" class="text-danger"></span>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Sexo</label>
+            <select asp-for="idSexo" class="form-control" asp-items="ViewBag.SexoOptions">
+                <option value="@ViewBag.NombreSexo">@ViewBag.NombreSexo</option>
+            </select>
+
+        </div>
+        <div class="form-group col-md-6">
+            <label>Documento ID</label>
+            <input asp-for="documentoId" type="text" class="form-control">
+            <span asp-validation-for="documentoId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Correo</label>
+            <input asp-for="correo" type="email" class="form-control">
+            <span asp-validation-for="correo" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label>Telefono</label>
+            <input asp-for="telefono" type="text" class="form-control">
+            <span asp-validation-for="telefono" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Grupo</label>
+            <select asp-for="idGrupo" class="form-control" asp-items="ViewBag.GrupoOptions">
+                <option value="@ViewBag.NombreGrupo">@ViewBag.NombreGrupo</option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label>Habitación</label>
+            <select asp-for="idHabitacion" class="form-control" asp-items="ViewBag.HabitacionOptions">
+                <option value="@ViewBag.NumeroHabitacion">@ViewBag.NumeroHabitacion</option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label>Rol</label>
+            <select asp-for="idRol" class="form-control" asp-items="ViewBag.RolOptions">
+                <option value="@ViewBag.NombreRol">@ViewBag.NombreRol</option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label>Alergias en Alimentación</label>
+            <textarea asp-for="alergiaAlimentacion" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Alergias Varias</label>
+        <textarea asp-for="alegiaVarias" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label>Observaciones</label>
+        <textarea asp-for="observaciones" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Agregar Persona</button>
+    <a asp-action="Listar" asp-controller="persona" class="btn btn-warning">Volver a la Lista</a>
+</form>
+

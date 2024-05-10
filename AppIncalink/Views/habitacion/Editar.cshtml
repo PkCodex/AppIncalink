@@ -1,0 +1,31 @@
+﻿@model habitacionModel
+@{
+    ViewData["Title"] = "Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1> Editar habitacion </h1>
+<form asp-action="Editar" asp-controller="habitacion" method="post">
+    <input asp-for="id" type="hidden" class="form-control">
+    <!--agregando-->
+    <div id="contenedorFinca" class="form-row">
+        <div class="form-group col-md-6">
+            <label>Numero de habitación</label>
+            <input asp-for="id" type="number" class="form-control" id="">
+            <span asp-validation-for="id" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label>N° Camas</label>
+            <input asp-for="numCamas" type="number" class="form-control" id="">
+            <span asp-validation-for="numCamas" class="text-danger"></span>
+        </div>
+
+        <!--agregando mas campos a mi div #contenedorFinca-->
+
+    </div>
+    <button type="submit" class="btn btn-primary">Editar Habitación</button>
+    <a asp-action="Listar" asp-controller="habitacion" class="btn btn-warning">Volver a la Lista</a>
+
+</form>
+
+
