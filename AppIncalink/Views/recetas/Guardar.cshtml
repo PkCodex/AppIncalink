@@ -1,0 +1,76 @@
+﻿@model recetasModel
+@{
+    ViewData["Title"] = "Guardar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Guardar</h1>
+<form asp-action="Guardar" asp-controller="recetas" method="post" id="recetaForm">
+
+    <div id="productosContainer">
+        <!-- Aquí se agregarán dinámicamente los campos de productos y cantidades -->
+        <div class="form-group">
+            <label>Menu</label>
+            <select asp-for="idMenu" class="form-control" asp-items="ViewBag.MenuOptions">
+                <option value="@ViewBag.NombreMenu">@ViewBag.NombreMenu</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>Producto</label>
+                <select class="form-control" name="idProducto">
+                    <!-- Agrega las opciones de productos desde tu ViewBag -->
+                    @foreach (var producto in ViewBag.ProductosOptions)
+                    {
+                        <option value="@producto.Value">@producto.Text</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label>Cantidad</label>
+                <input type="number" class="form-control" name="cantidad" step="0.01" min="0.01">
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-primary" onclick="agregarProducto()">Agregar Producto</button>
+    <button type="button" class="btn btn-danger" onclick="eliminarProducto()">Eliminar Producto</button>
+    <button type="submit" class="btn btn-success">Guardar Receta</button>
+</form>
+
+<script>
+    var productoIndex = 0;
+
+    function agregarProducto() {
+        productoIndex++;
+        var container = document.getElementById("productosContainer");
+        var nuevoProducto = document.createElement("div");
+        nuevoProducto.innerHTML = `
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Producto</label>
+                        <select class="form-control" name="Productos[${productoIndex}].IdProducto">
+                            <!-- Agrega las opciones de productos desde tu ViewBag -->
+    @foreach (var producto in ViewBag.ProductosOptions)
+    {
+                                        <option value="@producto.Value">@producto.Text</option>
+    }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Cantidad</label>
+                        <input type="number" class="form-control" name="Productos[${productoIndex}].Cantidad" step="0.01" min="0.01">
+                    </div>
+                </div>
+            `;
+        container.appendChild(nuevoProducto);
+    }
+
+    function eliminarProducto() {
+        var container = document.getElementById("productosContainer");
+        var productos = container.querySelectorAll(".form-row");
+        if (productos.length > 1) {
+            container.removeChild(productos[productos.length - 1]);
+        }
+    }
+</script>

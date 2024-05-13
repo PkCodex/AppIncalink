@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.Loader;
-
 namespace AppIncalink.Extension
 {
     public class CustomAssemblyLoadContext : AssemblyLoadContext
     {
+
         public IntPtr LoadUnmanagedLibrary(string absolutePath)
         {
             return LoadUnmanagedDll(absolutePath);
@@ -17,5 +17,5 @@ namespace AppIncalink.Extension
         {
             throw new NotImplementedException();
         }
-    }
+    }  
 }

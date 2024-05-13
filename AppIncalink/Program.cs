@@ -1,9 +1,7 @@
-using AppIncalink.Extension;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using AppIncalink.Datos;
-using PdfSharp.Drawing;
-using PdfSharp.Pdf;
-using PdfSharp.Fonts;
-using Microsoft.AspNetCore.Hosting;
+using AppIncalink.Extension;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +10,6 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddSingleton<actividadesDatos>();
 builder.Services.AddScoped<grupoDatos>();
-
 
 //var context = new CustomAssemblyLoadContext();
 //context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "LibreriaPDF/libwkhtmltox.dll"));
@@ -23,15 +20,7 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
 }
-
-GlobalFontSettings.FontResolver = new CustomFontResolver();
-
-
-
-app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -40,6 +29,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=calendario}/{action=Calendario}/{id?}");
+// pattern: "{controller=reportes}/{action=VistaParaPDFGrupo}/{id?}");
+pattern: "{controller=calendario}/{action=Calendario}/{id?}");
 
 app.Run();

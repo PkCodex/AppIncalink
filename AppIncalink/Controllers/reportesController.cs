@@ -2,51 +2,112 @@
 using AppIncalink.Datos;
 using AppIncalink.Models;
 using Microsoft.AspNetCore.Http.Extensions;
+
+using DinkToPdf.Contracts;
+using DinkToPdf;
 using System.Text;
-using System.Data.SqlClient;
-using PdfSharp.Drawing;
-using PdfSharp.Pdf;
+
+
 namespace AppIncalink.Controllers
 {
     public class reportesController : Controller
     {
-        
-        public IActionResult Reportes()
+        private readonly IConverter _converter;
+
+        public reportesController(IConverter converter)
+        {
+            _converter = converter;
+
+        }
+
+        public IActionResult VistaparaPdf()
         {
             return View();
+
         }
-
-        public IActionResult GenerarPDF()
+        public IActionResult index()
         {
-            // Creamos un nuevo documento PDF
-            PdfDocument document = new PdfDocument();
+            return View();
+        
+        }
+        public IActionResult MostrarPdf()
+        {
 
-            // Agregamos una página al documento
-            PdfPage page = document.AddPage();
+            var listaActividades = new actividadesDatos().listar();
 
-            // Obtenemos un objeto XGraphics para dibujar en la página
-            XGraphics gfx = XGraphics.FromPdfPage(page);
+            var htmlTabla = new StringBuilder();
+            htmlTabla.Append("<table border='1' cellpadding='10' cellspacing='0'>");
+            htmlTabla.Append("<tr><th>Nombre</th><th>Grupo</th><th>Fecha de Inicio</th><th>Fecha Fin</th><th>recursos</th><th>responsables</th><th>lugarDesde</th><th>Observaciones</th><th>tipo de Actividad</th><th>menu</th><th>Vehiculo</th></tr>");
 
-            // Creamos una fuente y un formato de texto
-            XFont font = new XFont("Fuentes\\Roboto-Bold.ttf", 20);
-
-            XStringFormat format = new XStringFormat();
-
-            // Dibujamos un texto en la página
-            gfx.DrawString("¡Hola, mundo!", font, XBrushes.Black,
-                new XRect(0, 0, page.Width, page.Height),
-                XStringFormats.Center);
-
-            // Guardamos el documento en un array de bytes
-            byte[] pdfBytes;
-            using (var stream = new System.IO.MemoryStream())
+            foreach (var actividad in listaActividades)
             {
-                document.Save(stream, false);
-                pdfBytes = stream.ToArray();
+                htmlTabla.Append("<tr>");
+                htmlTabla.Append($"<td>{actividad.nombre}</td>");
+                htmlTabla.Append($"<td>{actividad.idGrupo}</td>");
+                htmlTabla.Append($"<td>{actividad.fechaInicio}</td>");
+                htmlTabla.Append($"<td>{actividad.fechaFin}</td>");
+                htmlTabla.Append($"<td>{actividad.recursos}</td>");
+                htmlTabla.Append($"<td>{actividad.responsables}</td>");
+                htmlTabla.Append($"<td>{actividad.lugarDesde}</td>");
+                htmlTabla.Append($"<td>{actividad.LugarHacia}</td>");
+                htmlTabla.Append($"<td>{actividad.observaciones}</td>");
+                htmlTabla.Append($"<td>{actividad.idTipoActividad}</td>");
+                htmlTabla.Append($"<td>{actividad.idMenu}</td>");
+                htmlTabla.Append($"<td>{actividad.idVehiculo}</td>");
+                htmlTabla.Append("</tr>");
             }
 
-            // Retornamos el archivo PDF como un archivo descargable
-            return File(pdfBytes, "application/pdf", "ejemplo.pdf");
+            htmlTabla.Append("</table>");
+
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = new GlobalSettings()
+                {
+                    PaperSize = PaperKind.A4,
+                    Orientation = Orientation.Portrait
+                },
+                Objects = {
+            new ObjectSettings(){
+                HtmlContent = htmlTabla.ToString()
+            }
         }
+            };
+
+            var archivoPDF = _converter.Convert(pdf);
+
+            return File(archivoPDF, "application/pdf");
+        }
+
+        public IActionResult DescargarPDF()
+        {
+            string pagina_actual = HttpContext.Request.Path;
+            string url_pagina = HttpContext.Request.GetEncodedUrl();
+            url_pagina = url_pagina.Replace(pagina_actual, "");
+            url_pagina = $"{url_pagina}/reportes/VistaparaPdf";
+
+
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = new GlobalSettings()
+                {
+                    PaperSize = PaperKind.A4,
+                    Orientation = Orientation.Portrait
+                },
+                Objects = {
+                    new ObjectSettings(){
+                        Page = url_pagina
+                    }
+                }
+
+            };
+
+            var archivoPDF = _converter.Convert(pdf);
+            string nombrePDF = "reporte_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ".pdf";
+
+            return File(archivoPDF, "application/pdf", nombrePDF);
+        }
+
+
+
     }
 }
