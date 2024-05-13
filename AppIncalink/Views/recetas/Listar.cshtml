@@ -3,8 +3,19 @@
     ViewData["Title"] = "Listar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<br />
+<section>
+    <div class="form-row">
 
-<h1>Listar</h1>
+        <div class="form-group col-md-6">
+            <a asp-action="Listar" asp-controller="menu" class="btn btn-primary" asp-route-id="id">Ver Menus</a>
+        </div>
+        <div class="form-group col-md-6">
+            <a asp-action="Listar" asp-controller="productos" class="btn btn-success " asp-route-id="id">Ver Productos</a>
+        </div>
+
+    </div>
+</section>
 <a asp-action="Guardar" asp-controller="recetas" class="btn btn-success">Crear Receta</a>
 <section>
     <div class="container">
@@ -42,15 +53,3 @@
 
 </section>
 
-<section>
-    <div class="form-row">
-
-        <div class="form-group col-md-6">
-            <a asp-action="Listar" asp-controller="menu" class="btn btn-primary" asp-route-id="id">Ver Recetas</a>
-        </div>
-        <div class="form-group col-md-6">
-            <a asp-action="Listar" asp-controller="productos" class="btn btn-success " asp-route-id="id">Ver Productos</a>
-        </div>
-
-    </div>
-</section>

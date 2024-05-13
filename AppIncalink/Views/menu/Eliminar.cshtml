@@ -1,0 +1,19 @@
+﻿@model menuModel
+@{
+    ViewData["Title"] = "Eliminar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Eliminar</h1>
+<form asp-action="Eliminar" asp-controller="menu" method="post">
+    <input asp-for="id" type="hidden" class="form-control">
+    <!--agregando-->
+
+    <div class="alert alert-danger" role="alert">
+        ¿Desea eliminar este Menu: @Html.DisplayTextFor(m => m.nombre)?
+    </div>
+
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Listar" asp-controller="menu" class="btn btn-warning">Volver a la Lista</a>
+
+</form>

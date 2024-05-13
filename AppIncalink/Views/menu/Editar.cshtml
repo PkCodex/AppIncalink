@@ -1,0 +1,21 @@
+﻿@model menuModel
+@{
+    ViewData["Title"] = "Guardar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Editar</h1>
+
+<form asp-action="Editar" asp-controller="menu">
+    <input asp-for="id" type="hidden" class="form-control">
+    <div class="form-group">
+        <label>Nombre del Menu</label>
+        <input asp-for="nombre" type="text" class="form-control">
+        <span asp-validation-for="nombre" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Editar Menu</button>
+    <a asp-action="Listar" asp-controller="menu" class="btn btn-warning">Volver a la Lista</a>
+</form>
+
+<

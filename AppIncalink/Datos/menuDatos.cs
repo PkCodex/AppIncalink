@@ -23,8 +23,7 @@ namespace AppIncalink.Datos
                         oLista.Add(new menuModel()
                         {
                             id = Convert.ToInt32(dr["id"]),
-                            nombre = dr["nombre"].ToString(),
-                            idActividad = Convert.ToInt32(dr["idActividad"])
+                            nombre = dr["nombre"].ToString(),                       
                         });
                     }
                 }
@@ -75,6 +74,66 @@ namespace AppIncalink.Datos
 
                     cmd.CommandType = CommandType.StoredProcedure;
 
+                    cmd.ExecuteNonQuery();
+                }
+                rpta = true;
+            }
+            catch (Exception e)
+            {
+                string error = e.Message;
+                rpta = false;
+            }
+
+            return rpta;
+
+        }
+
+        //Metodo editar 
+        public bool Editar(menuModel omenu)
+        {
+            bool rpta;
+            try
+            {
+                var cn = new Conexion();
+                using (var conexion = new SqlConnection(cn.getCadenaSQL()))
+                {
+                    conexion.Open();
+
+
+                    SqlCommand cmd = new SqlCommand("EditarMenu", conexion);
+                    cmd.Parameters.AddWithValue("@id", omenu.id); // Asegúrate de usar @id aquí
+                    cmd.Parameters.AddWithValue("@nombre", omenu.nombre); // Corrige el nombre del parámetro
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+
+                    cmd.ExecuteNonQuery();
+                }
+                rpta = true;
+            }
+            catch (Exception e)
+            {
+                string error = e.Message;
+                rpta = false;
+            }
+
+            return rpta;
+
+        }
+
+        //Metodo eliminar
+        public bool Eliminar(int id)
+        {
+            bool rpta;
+            try
+            {
+                var cn = new Conexion();
+                using (var conexion = new SqlConnection(cn.getCadenaSQL()))
+                {
+                    conexion.Open();
+
+                    SqlCommand cmd = new SqlCommand("EliminarMenu", conexion);
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.ExecuteNonQuery();
                 }
                 rpta = true;

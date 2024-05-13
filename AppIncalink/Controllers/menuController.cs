@@ -35,5 +35,42 @@ namespace AppIncalink.Controllers
                 return RedirectToAction("Listar");
             else return View();
         }
+
+        public IActionResult Editar(int id)
+        {
+            //metodo que devuleve la vista
+            var omenu = _menuDatos.Obtener(id);
+            return View(omenu);
+        }
+        [HttpPost]
+        public IActionResult Editar(menuModel omenu)
+        {
+            if (!ModelState.IsValid)
+                return View();
+            var respuesta = _menuDatos.Editar(omenu);
+            if (respuesta)
+
+                return RedirectToAction("Listar");
+            else return View();
+        }
+
+
+        public IActionResult Eliminar(int id)
+        {
+            //metodo que devuleve la vista
+            var omenu = _menuDatos.Obtener(id);
+            return View(omenu);
+        }
+        [HttpPost]
+        public IActionResult Eliminar(menuModel omenu)
+        {
+
+            var respuesta = _menuDatos.Eliminar(omenu.id);
+            if (respuesta)
+
+                return RedirectToAction("Listar");
+            else
+                return View();
+        }
     }
 }
