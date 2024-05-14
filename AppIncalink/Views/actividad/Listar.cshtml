@@ -1,4 +1,4 @@
-﻿@model List<actividadesModel>
+﻿@model List<nombreActividadesModel>
 @{
     ViewData["Title"] = "Listar";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -24,6 +24,8 @@
                 <th scope="col">Lugar Hacia</th>
                 <th scope="col">Observaciones</th>
                 <th scope="col">Tipo Actividad</th>
+                <th scope="col">Menu</th>
+                <th scope="col">Vehiculo</th>
                 <th>Ver Detalle</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
@@ -34,7 +36,7 @@
             {
                 <tr>
                     <td>@item.nombre</td>
-                    <td>@item.idGrupo</td>
+                    <td>@item.nombreGrupo</td>
                     <td>@item.fechaInicio</td>
                     <td>@item.fechaFin</td>
                     <td>@item.recursos</td>
@@ -42,21 +44,9 @@
                     <td>@item.lugarDesde</td>
                     <td>@item.LugarHacia</td>
                     <td>@item.observaciones</td>
-                    <td>
-                        <!-- Mostrar solo un ID si tiene valor -->
-                        @if (item.idTipoActividad.HasValue)
-                        {
-                            <span>@item.idTipoActividad</span>
-                        }
-                        else if (item.idMenu.HasValue)
-                        {
-                            <span>@item.idMenu</span>
-                        }
-                        else if (item.idVehiculo.HasValue)
-                        {
-                            <span>@item.idVehiculo</span>
-                        }
-                    </td>
+                    <td>@item.nombreTipoActividad</td>
+                    <td>@item.nombreMenu</td>
+                    <td>@item.nombreVehiculo</td>
                     <td>
                         <a asp-action="ListarActividad" asp-controller="actividad" asp-route-idGrupo="@item.id" asp-route-idPersona="@item.id">Ver Detalles</a>
                     </td>

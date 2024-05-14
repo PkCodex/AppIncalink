@@ -43,7 +43,7 @@ namespace AppIncalink.Controllers
             {
                 htmlTabla.Append("<tr>");
                 htmlTabla.Append($"<td>{actividad.nombre}</td>");
-                htmlTabla.Append($"<td>{actividad.idGrupo}</td>");
+                htmlTabla.Append($"<td>{actividad.nombreGrupo}</td>");
                 htmlTabla.Append($"<td>{actividad.fechaInicio}</td>");
                 htmlTabla.Append($"<td>{actividad.fechaFin}</td>");
                 htmlTabla.Append($"<td>{actividad.recursos}</td>");
@@ -51,9 +51,9 @@ namespace AppIncalink.Controllers
                 htmlTabla.Append($"<td>{actividad.lugarDesde}</td>");
                 htmlTabla.Append($"<td>{actividad.LugarHacia}</td>");
                 htmlTabla.Append($"<td>{actividad.observaciones}</td>");
-                htmlTabla.Append($"<td>{actividad.idTipoActividad}</td>");
-                htmlTabla.Append($"<td>{actividad.idMenu}</td>");
-                htmlTabla.Append($"<td>{actividad.idVehiculo}</td>");
+                htmlTabla.Append($"<td>{actividad.nombreTipoActividad}</td>");
+                htmlTabla.Append($"<td>{actividad.nombreMenu}</td>");
+                htmlTabla.Append($"<td>{actividad.nombreVehiculo}</td>");
                 htmlTabla.Append("</tr>");
             }
 

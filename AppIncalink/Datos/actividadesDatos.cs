@@ -8,35 +8,35 @@ namespace AppIncalink.Datos
     public class actividadesDatos
     {
         //Metodo Listar
-        public List<actividadesModel> listar()
+        public List<nombreActividadesModel> listar()
         {
-            var oLista = new List<actividadesModel>();
+            var oLista = new List<nombreActividadesModel>();
             var cn = new Conexion();
             using (var conexion = new SqlConnection(cn.getCadenaSQL()))
             {
                 conexion.Open();
 
-                SqlCommand cmd = new SqlCommand("ListarActividades", conexion);
+                SqlCommand cmd = new SqlCommand("ListarActividadesNombres", conexion);
                 cmd.CommandType = CommandType.StoredProcedure;
                 using (var dr = cmd.ExecuteReader())
                 {
                     while (dr.Read())
                     {
-                        oLista.Add(new actividadesModel()
+                        oLista.Add(new nombreActividadesModel()
                         {
-                            id = dr["id"] != DBNull.Value ? Convert.ToInt32(dr["id"]) : 0,
-                            nombre = dr["nombre"] != DBNull.Value ? dr["nombre"].ToString() : string.Empty,
-                            idGrupo = dr["idGrupo"] != DBNull.Value ? Convert.ToInt32(dr["idGrupo"]) : 0,
-                            fechaInicio = dr["fechaInicio"] != DBNull.Value ? Convert.ToDateTime(dr["fechaInicio"]) : DateTime.MinValue,
-                            fechaFin = dr["fechaFin"] != DBNull.Value ? Convert.ToDateTime(dr["fechaFin"]) : DateTime.MinValue,
-                            recursos = dr["recursos"] != DBNull.Value ? dr["recursos"].ToString() : string.Empty,
-                            responsables = dr["responsable"] != DBNull.Value ? dr["responsable"].ToString() : string.Empty,
-                            lugarDesde = dr["lugarDesde"] != DBNull.Value ? dr["lugarDesde"].ToString() : string.Empty,
-                            LugarHacia = dr["LugarHacia"] != DBNull.Value ? dr["LugarHacia"].ToString() : string.Empty,
-                            observaciones = dr["observaciones"] != DBNull.Value ? dr["observaciones"].ToString() : string.Empty,
-                            idTipoActividad = dr["idTipoActividad"] != DBNull.Value ? Convert.ToInt32(dr["idTipoActividad"]) : 0,
-                            idMenu = dr["idMenu"] != DBNull.Value ? Convert.ToInt32(dr["idMenu"]) : 0,
-                            idVehiculo = dr["idVehiculo"] != DBNull.Value ? Convert.ToInt32(dr["idVehiculo"]) : 0
+                            id = Convert.ToInt32(dr["id"]),
+                            nombre = dr["nombre"].ToString(),
+                            nombreGrupo = dr["nombreGrupo"].ToString(),
+                            fechaInicio = Convert.ToDateTime(dr["fechaInicio"]),
+                            fechaFin = Convert.ToDateTime(dr["fechaFin"]),
+                            recursos = dr["recursos"].ToString(),
+                            responsables = dr["responsable"].ToString(),
+                            lugarDesde = dr["lugarDesde"].ToString(),
+                            LugarHacia = dr["LugarHacia"].ToString(),
+                            observaciones = dr["observaciones"].ToString(),
+                            nombreTipoActividad = dr["nombreTipoActividad"].ToString(),
+                            nombreMenu = dr["nombreMenu"].ToString(),
+                            nombreVehiculo = dr["nombreVehiculo"].ToString()
                         });
                     }
                 }
