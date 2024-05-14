@@ -94,7 +94,7 @@ namespace AppIncalink.Controllers
             return View(recetas);
         }
         [HttpPost]
-        public IActionResult Guardar(recetasModel oRecetas)
+        public IActionResult Guardar(recetasProductosModel oRecetas)
         {
             //Metodo recibe el obejeto para guardarlo en bd
             if (!ModelState.IsValid)

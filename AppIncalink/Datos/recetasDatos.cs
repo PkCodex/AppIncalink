@@ -63,7 +63,7 @@ namespace AppIncalink.Datos
             return orecetas;
         }
         //Metodo Guardar
-        public bool Guardar(recetasModel orecetas)
+        public bool Guardar(recetasProductosModel orecetas)
         {
             bool rpta;
             try
@@ -75,23 +75,40 @@ namespace AppIncalink.Datos
 
                     SqlCommand cmd = new SqlCommand("InsertarRecetas", conexion);
                     cmd.Parameters.AddWithValue("@idMenu", orecetas.idMenu);
-                    cmd.Parameters.AddWithValue("@idProducto", orecetas.idProducto);
-                    cmd.Parameters.AddWithValue("@cantidad", orecetas.cantidad);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.ExecuteNonQuery();
+                    // Ejecuta la inserción y obtén el ID generado para la receta
+                    int recetaId = (int)cmd.ExecuteScalar();
+
+                    // Guarda los productos y cantidades asociados con esta receta
+                    foreach (var productoCantidad in orecetas.Productos)
+                    {
+                        GuardarProductoCantidad(recetaId, productoCantidad, conexion);
+                    }
                 }
                 rpta = true;
             }
             catch (Exception e)
             {
-                string error = e.Message;
+                Console.WriteLine("Error al guardar la receta: " + e.Message);
                 rpta = false;
             }
-
             return rpta;
 
         }
+
+        private void GuardarProductoCantidad(int recetaId, ProductoCantidad productoCantidad, SqlConnection conexion)
+        {
+            SqlCommand cmd = new SqlCommand("InsertarProductoCantidad", conexion);
+            cmd.Parameters.AddWithValue("@idReceta", recetaId);
+            cmd.Parameters.AddWithValue("@idProducto", productoCantidad.idProducto);
+            cmd.Parameters.AddWithValue("@cantidad", productoCantidad.cantidad);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.ExecuteNonQuery();
+        }
+
+
 
         // Recetas para el listado del reporte
 
