@@ -1,8 +1,10 @@
-﻿using AppIncalink.Datos;
+﻿using Microsoft.AspNetCore.Mvc;
+
+using AppIncalink.Datos;
 using AppIncalink.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data.SqlClient;
+
 
 namespace AppIncalink.Controllers
 {
@@ -94,7 +96,7 @@ namespace AppIncalink.Controllers
             return View(recetas);
         }
         [HttpPost]
-        public IActionResult Guardar(recetasProductosModel oRecetas)
+        public IActionResult Guardar(recetasModel oRecetas)
         {
             //Metodo recibe el obejeto para guardarlo en bd
             if (!ModelState.IsValid)
@@ -106,5 +108,6 @@ namespace AppIncalink.Controllers
             else return View();
 
         }
+
     }
 }

@@ -185,7 +185,6 @@ namespace AppIncalink.Controllers
             return View(actividad);
         }
 
-        //
         [HttpPost]
         public IActionResult Guardar(actividadesModel oActividad)
         {

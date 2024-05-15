@@ -1,4 +1,6 @@
-﻿using AppIncalink.Models;
+﻿using AppIncalink.Datos;
+using AppIncalink.Models;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -63,7 +65,7 @@ namespace AppIncalink.Datos
             return orecetas;
         }
         //Metodo Guardar
-        public bool Guardar(recetasProductosModel orecetas)
+        public bool Guardar(recetasModel orecetas)
         {
             bool rpta;
             try
@@ -75,40 +77,23 @@ namespace AppIncalink.Datos
 
                     SqlCommand cmd = new SqlCommand("InsertarRecetas", conexion);
                     cmd.Parameters.AddWithValue("@idMenu", orecetas.idMenu);
+                    cmd.Parameters.AddWithValue("@idProducto", orecetas.idProducto);
+                    cmd.Parameters.AddWithValue("@cantidad", orecetas.cantidad);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    // Ejecuta la inserción y obtén el ID generado para la receta
-                    int recetaId = (int)cmd.ExecuteScalar();
-
-                    // Guarda los productos y cantidades asociados con esta receta
-                    foreach (var productoCantidad in orecetas.Productos)
-                    {
-                        GuardarProductoCantidad(recetaId, productoCantidad, conexion);
-                    }
+                    cmd.ExecuteNonQuery();
                 }
                 rpta = true;
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error al guardar la receta: " + e.Message);
+                string error = e.Message;
                 rpta = false;
             }
+
             return rpta;
 
         }
-
-        private void GuardarProductoCantidad(int recetaId, ProductoCantidad productoCantidad, SqlConnection conexion)
-        {
-            SqlCommand cmd = new SqlCommand("InsertarProductoCantidad", conexion);
-            cmd.Parameters.AddWithValue("@idReceta", recetaId);
-            cmd.Parameters.AddWithValue("@idProducto", productoCantidad.idProducto);
-            cmd.Parameters.AddWithValue("@cantidad", productoCantidad.cantidad);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.ExecuteNonQuery();
-        }
-
-
 
         // Recetas para el listado del reporte
 
